@@ -7,15 +7,15 @@
 using namespace cv;
 using namespace std;
 
-const string helper = "lab0 --image <filename>  --mode <mode>,\
-					  where <filename> image filename,\
-					  <mode> processing mode (may be 'blur', 'houghLines', 'findContours')";
+const string helper = "lab0 --image <filename>  --mode <mode>,\n\
+					  where <filename> image filename,\n\
+					  <mode> processing mode (may be 'blur', 'houghLines', 'findContours', defauld = 'blur')\n";
 
 bool processCommandLine(int argc, char *argv[], string &filename, string &mode);
 
 int main(int argc, char *argv[]) {
 	string filename, mode;
-
+	mode = "blur";
 	if (!processCommandLine(argc, argv, filename, mode)) {
 		cout << helper << endl;	
 		return 1;
@@ -71,6 +71,8 @@ int main(int argc, char *argv[]) {
 }
 
 bool processCommandLine(int argc, char *argv[], string &filename, string &mode) {
+	if (argc < 3)
+		return false;
 	for (int i = 1; i < argc; i++)
 	{
 		string str = argv[i];
