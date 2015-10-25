@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
 		blur(image, result, Size(5, 5));
 	} else if (mode.compare("houghLines") == 0) {
 		cvtColor(image, image, CV_BGR2GRAY);
+		threshold(image, image, 127, 255, THRESH_BINARY);
 
 		vector<Vec2f> lines;
 		HoughLines(image, lines, 1, CV_PI/180, 100, 0, 0 );
@@ -47,7 +48,8 @@ int main(int argc, char *argv[]) {
 		}
 	} else if (mode.compare("findContours") == 0) {
 		cvtColor(image, image, CV_BGR2GRAY);
-
+		threshold(image, image, 127, 255, THRESH_BINARY);
+		
 		vector<vector<Point> > contours;
 		vector<Vec4i> hierarchy;
 		findContours(image, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
@@ -64,7 +66,6 @@ int main(int argc, char *argv[]) {
 	if (!result.empty()) {
 		imshow("Result", result);
 	}
-
 	waitKey(0);
 
 	return 0;
